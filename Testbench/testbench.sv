@@ -112,9 +112,9 @@ module APB_Top_tb;
 
         $display("\n--- Starting Testcase 3: Address Range Error ---");
         #20
-      apb_write(32'h0000_5000, 32'h01234567); 
+      apb_write(32'h0001_0000, 32'h01234567); 
         #20
-        apb_read(32'h0000_5000);
+      apb_read(32'h0001_0000);
       $display("\n--- Starting Testcase 4: Empty Addr ---");
         #20
       apb_read(32'h0000_0001);
