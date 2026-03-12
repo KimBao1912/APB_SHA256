@@ -1,0 +1,21 @@
+module APB_RegFile
+  (input logic pCLK, pRSTn,
+   input logic [30:0] ADDR,
+   input logic [255:0] pWDATA,
+   input logic READ_en, WRITE_en,
+   output logic [255:0] pRDATA );
+  logic [255:0] reg_array [1023:0];
+  always_ff @(posedge pCLK or negedge pRSTn) begin
+    if(!pRSTn) begin
+      for (int i = 0; i < 1024; i++) begin
+        reg_array [i] <= 0;
+      end
+      pRDATA <= 0;
+    end
+    else begin
+      if(WRITE_en) reg_array[ADDR] <= pWDATA;
+      else if (READ_en) pRDATA <= reg_array[ADDR];
+      else pRDATA <= 0;
+    end
+  end
+endmodule
