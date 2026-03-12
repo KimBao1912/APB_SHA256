@@ -17,7 +17,7 @@ module APB_Slave
   logic [255:0] dataOut;
   logic [31:0] Hn;
   logic [2:0] cnt_val;
-  assign slave_access = pSEL & (pADDR[30:0] < 1024);
+  assign slave_access = pSEL & (pADDR[30:0] < 65536);
   assign hash_en = slave_access & pWRITE & pENABLE;
   assign WRITE_en = slave_access & pWRITE & hash_finish;
   assign READ_en = slave_access & ~pWRITE;
@@ -57,7 +57,7 @@ module APB_Slave
   //-----------------------
   always_ff @(posedge pCLK or negedge pRSTn) begin
     if(!pRSTn) pSLVERR <= 0;
-    else pSLVERR <= ~(pADDR[30:0] < 1024);
+    else pSLVERR <= ~(pADDR[30:0] < 65536);
   end
   //----------------------
   //|     pREADY         |
